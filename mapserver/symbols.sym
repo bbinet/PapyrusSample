@@ -1,0 +1,25 @@
+SYMBOLSET
+  SYMBOL
+    NAME 'cinema'
+    TYPE PIXMAP
+    IMAGE "symbols/cinema.png"
+  END
+  
+  SYMBOL
+    NAME 'pub'
+    TYPE PIXMAP
+    IMAGE "symbols/pub.png"
+  END
+  
+  SYMBOL
+    NAME 'resto'
+    TYPE PIXMAP
+    IMAGE "symbols/restaurant.png"
+  END
+
+  SYMBOL
+    NAME 'fastfood'
+    TYPE PIXMAP
+    IMAGE "symbols/fastfood.png"
+  END
+END
