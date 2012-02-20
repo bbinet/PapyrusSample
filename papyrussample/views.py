@@ -9,16 +9,10 @@ from .models import (
 def index(request):
     return {}
 
-@view_config(route_name='pois', renderer='json')
+@view_config(route_name='pois', renderer='geojson')
 def pois(request):
     pois = DBSession.query(Poi).limit(2)
-    return [
-        {
-            'gid': p.gid,
-            'name': p.name,
-            'rating': int(p.rating),
-            'type': p.type,
-        } for p in pois ]
+    return pois.all()
 
 @view_config(route_name='poi_count', renderer='string')
 def poi_count(request):
