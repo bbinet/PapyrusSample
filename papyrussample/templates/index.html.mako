@@ -11,6 +11,7 @@
     <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script>
     <script>
     var map = new OpenLayers.Map("map", {
+        projection: new OpenLayers.Projection("EPSG:900913"),
         maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34)
     });
     map.addLayer(new OpenLayers.Layer.OSM("Simple OSM Map"));
@@ -23,6 +24,17 @@
             singleTile: true
         }
     ));
+    map.addLayer(new OpenLayers.Layer.Vector("Vector", {
+        strategies: [new OpenLayers.Strategy.BBOX()],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: "${request.route_path('pois_read_many')}",
+            format: new OpenLayers.Format.GeoJSON()
+        }),
+        styleMap: new OpenLayers.StyleMap(
+            OpenLayers.Util.applyDefaults(
+                {fillColor: "blue", strokeColor: "blue"},
+                OpenLayers.Feature.Vector.style["default"]))
+    }));
     map.zoomToExtent(new OpenLayers.Bounds(657453, 5710249, 661266, 5712022));
     </script>
 </body>
