@@ -14,7 +14,16 @@
         maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34)
     });
     map.addLayer(new OpenLayers.Layer.OSM("Simple OSM Map"));
-    map.zoomToMaxExtent();
+    map.addLayer(new OpenLayers.Layer.WMS("Pois",
+        "http://localhost/cgi-bin/mapserv?map=/tmp/mapserver/app.map",
+        {
+            layers: "sustenance",
+            transparent: true
+        }, {
+            singleTile: true
+        }
+    ));
+    map.zoomToExtent(new OpenLayers.Bounds(657453, 5710249, 661266, 5712022));
     </script>
 </body>
 </html>
