@@ -1,0 +1,145 @@
+#
+# MapServer Mapfile
+#
+# Test requests:
+#
+# WMS GetCapabilities:
+# /cgi-bin/mapserv?map=/tmp/mapserver/app.map&service=wms&version=1.1.1&request=getcapabilities
+#
+# WMS GetMap:
+# /cgi-bin/mapserv?map=/tmp/mapserver/app.map&service=wms&version=1.1.1&request=getmap&bbox=657453,5710249,661266,5712022&layers=sustenance&width=600&height=400&srs=EPSG:900913&format=image/png
+#
+
+MAP
+    NAME "PapyrusSample"
+
+    EXTENT -180 -90 180 90
+    UNITS dd
+
+    # RESOLUTION and DEFRESOLUTION default to 72. If you
+    # change RESOLUTION to some other value, also change
+    # DEFRESOLUTION. See
+    # http://mapserver.org/development/rfc/ms-rfc-55.html
+    #RESOLUTION 254
+    #DEFRESOLUTION 254
+
+    # MAXSIZE shouldn't be less than 4000 for MF print
+    MAXSIZE 4000
+
+    SHAPEPATH ''
+
+    IMAGECOLOR 255 255 255
+    STATUS ON
+
+    FONTSET "fonts.conf"
+    SYMBOLSET "symbols.sym"
+
+    OUTPUTFORMAT
+        NAME png
+        DRIVER AGG/PNG
+        MIMETYPE "image/png"
+        IMAGEMODE RGBA
+        EXTENSION "png"
+        FORMATOPTION "INTERLACE=OFF"
+    END
+
+    PROJECTION
+        "init=epsg:4326"
+    END
+
+    WEB
+        METADATA
+            "ows_enable_request" "*"
+            "wms_title" "changeme"
+            "wms_abstract" "changeme"
+            "wms_onlineresource" "changeme"
+            "wms_srs" "epsg:4326"
+            "wms_encoding" "UTF-8"
+        END
+    END
+
+    LAYER
+        NAME sustenance
+        TYPE POINT
+        STATUS ON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost dbname=papyrus_sample user=www-data password=www-data port=5432"
+        DATA "the_geom from poi_osm"
+        LABELITEM "name"
+        LABELMAXSCALEDENOM 60000
+        TOLERANCE 10
+        CLASS
+            NAME "Bar, pub, cafe"
+            EXPRESSION ("[type]" == "Bar" OR "[type]" == "Pub" OR "[type]" == "Cafe")
+            LABEL
+                COLOR  100 100 100
+                FONT "Vera"
+                TYPE truetype
+                BUFFER 10
+                SIZE 8
+                ANGLE FOLLOW
+                POSITION lc
+                MINFEATURESIZE 10
+                PRIORITY 10
+                PARTIALS FALSE
+            END
+            STYLE
+                SIZE 20
+                SYMBOL pub
+                COLOR 255 0 0
+            END
+        END
+        CLASS
+            NAME "Restaurants"
+            EXPRESSION ("[type]" == "Restaurant")
+            LABEL
+                COLOR  100 100 100
+                FONT "Vera"
+                TYPE truetype
+                BUFFER 10
+                SIZE 8
+                ANGLE FOLLOW
+                POSITION lc
+                MINFEATURESIZE 10
+                PRIORITY 10
+                PARTIALS FALSE
+            END
+            STYLE
+                SIZE 20
+                SYMBOL resto
+                COLOR 0 255 0
+            END
+        END
+        CLASS
+            NAME "Fastfood"
+            EXPRESSION ("[type]" == "Fastfood")
+            LABEL
+                COLOR  100 100 100
+                FONT "Vera"
+                TYPE truetype
+                BUFFER 10
+                SIZE 8
+                ANGLE FOLLOW
+                POSITION lc
+                MINFEATURESIZE 10
+                PRIORITY 10
+                PARTIALS FALSE
+            END
+            STYLE
+                SIZE 20
+                SYMBOL fastfood
+                COLOR 0 255 0
+            END
+        END
+        PROJECTION
+            "init=epsg:900913"
+        END
+        METADATA
+            "wms_title" "poi" #required
+            "wms_srs" "EPSG:900913"
+            "gml_include_items" "all"
+            "gml_geometries" "the_geom"
+            "gml_geom_type" "point"
+        END
+    END
+END
