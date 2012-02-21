@@ -7,7 +7,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
-    'pyramid',
+    'pyramid>=1.3a8',
     'papyrus',
     'SQLAlchemy',
     'GeoAlchemy',
@@ -17,6 +17,7 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'JSTools',
     ]
 
 setup(name='PapyrusSample',
