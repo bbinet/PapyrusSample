@@ -1,0 +1,3 @@
+[submodule "papyrussample/static/lib/openlayers"]
+	path = papyrussample/static/lib/openlayers
+	url = https://github.com/openlayers/openlayers.git
