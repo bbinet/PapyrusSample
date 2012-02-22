@@ -63,7 +63,7 @@ MAP
         TYPE POINT
         STATUS ON
         CONNECTIONTYPE POSTGIS
-        CONNECTION "host=localhost dbname=papyrus_sample user=www-data password=www-data port=5432"
+        CONNECTION "host=${dbhost} dbname=${db} user=${dbuser} password=${dbpassword} port=${dbport}"
         DATA "the_geom from poi_osm"
         LABELITEM "name"
         LABELMAXSCALEDENOM 60000

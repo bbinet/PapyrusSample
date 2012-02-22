@@ -12,7 +12,7 @@ pyramid.includes = pyramid_debugtoolbar
 
 mako.directories = papyrussample:templates
 
-sqlalchemy.url = postgresql://www-data:www-data@localhost:5432/papyrus_sample
+sqlalchemy.url = postgresql://${dbuser}:${dbpassword}@${dbhost}:${dbport}/${db}
 
 jsbuild_cfg = ${jsbuild:config}
 jsbuild_root_dir = ${jsbuild:base-dir}
