@@ -1,2 +1,11 @@
-PapyrusSample.db
+.installed.cfg
+MANIFEST
+apache/README.txt
+apache/frontend.conf
+apache/mapserver.conf
+apache/tomcat-print.conf
+apache/wsgi.conf
+apache/tilecache.conf
+tilecache/tilecache.cfg
+print/config.yaml
 PapyrusSample.egg-info
