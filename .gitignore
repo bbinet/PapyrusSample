@@ -8,4 +8,7 @@ apache/wsgi.conf
 apache/tilecache.conf
 tilecache/tilecache.cfg
 print/config.yaml
+mapserver/app.map
+development.ini
+production.ini
 PapyrusSample.egg-info
