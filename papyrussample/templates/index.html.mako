@@ -3,39 +3,36 @@
 <head>
     <title>Pyramid / Papyrus workshop</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-    <link rel="shortcut icon" href="${request.static_url('papyrussample:static/favicon.ico')}" />
-    <link rel="stylesheet" href="${request.static_url('papyrussample:static/app.css')}" type="text/css" />
+    <link rel="shortcut icon" type="image/x-icon" href="${request.static_url('papyrussample:static/app/images/favicon.ico')}" />
+% if debug:
+    <link rel="stylesheet" type="text/css" href="${request.static_url('papyrussample:static/lib/openlayers/theme/default/style.css')}" />
+    <link rel="stylesheet" type="text/css" href="${request.static_url('papyrussample:static/app/css/main.css')}" />
+% else:
+    <link rel="stylesheet" type="text/css" href="${request.static_url('papyrussample:static/build/app.css')}" />
+% endif
+
+    <script type="text/javascript">
+        URLS = {
+            OpenLayers_ImgPath: "${request.static_url('papyrussample:static/lib/openlayers/img/')}",
+            pois_read_many: "${request.route_path('pois_read_many')}"
+        };
+    </script>
+% if debug:
+    <%!
+    from jstools.merge import Merger
+    %>\
+    <%
+    jsbuild_cfg = request.registry.settings.get('jsbuild_cfg')
+    jsbuild_root_dir = request.registry.settings.get('jsbuild_root_dir')
+    %>
+    % for script in Merger.from_fn(jsbuild_cfg, root_dir=jsbuild_root_dir).run(list_only=True):
+    <script type="text/javascript" src="${request.static_path(script.replace('/', ':', 1))}"></script>
+    % endfor
+% else:
+    <script type="text/javascript" src="${request.static_url('papyrussample:static/build/app.js')}"></script>
+% endif
 </head>
 <body>
     <div id="map"></div>
-    <script type="text/javascript" src="http://openlayers.org/dev/OpenLayers.js"></script>
-    <script>
-    var map = new OpenLayers.Map("map", {
-        projection: new OpenLayers.Projection("EPSG:900913"),
-        maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34)
-    });
-    map.addLayer(new OpenLayers.Layer.OSM("Simple OSM Map"));
-    map.addLayer(new OpenLayers.Layer.WMS("Pois",
-        "http://localhost/cgi-bin/mapserv?map=/tmp/mapserver/app.map",
-        {
-            layers: "sustenance",
-            transparent: true
-        }, {
-            singleTile: true
-        }
-    ));
-    map.addLayer(new OpenLayers.Layer.Vector("Vector", {
-        strategies: [new OpenLayers.Strategy.BBOX()],
-        protocol: new OpenLayers.Protocol.HTTP({
-            url: "${request.route_path('pois_read_many')}",
-            format: new OpenLayers.Format.GeoJSON()
-        }),
-        styleMap: new OpenLayers.StyleMap(
-            OpenLayers.Util.applyDefaults(
-                {fillColor: "blue", strokeColor: "blue"},
-                OpenLayers.Feature.Vector.style["default"]))
-    }));
-    map.zoomToExtent(new OpenLayers.Bounds(657453, 5710249, 661266, 5712022));
-    </script>
 </body>
 </html>

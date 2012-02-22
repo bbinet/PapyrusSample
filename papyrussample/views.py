@@ -39,4 +39,4 @@ def delete(request):
 
 @view_config(route_name='home', renderer='index.html.mako')
 def index(request):
-    return {}
+    return {'debug': 'debug' in request.params}
