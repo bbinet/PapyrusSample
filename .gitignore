@@ -12,3 +12,5 @@ mapserver/app.map
 development.ini
 production.ini
 PapyrusSample.egg-info
+papyrussample/static/lib/geoext.ux/
+papyrussample/static/lib/ext/
